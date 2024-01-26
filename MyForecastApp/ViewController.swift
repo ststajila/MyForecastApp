@@ -5,23 +5,37 @@
 //  Created by STANISLAV STAJILA on 1/25/24.
 //
 
-struct Info: Codable{
-    var feels_like: String
-    var grnd_level: Int
-    var humidity: Int
-    var pressure: Int
-    var sea_level: Int
-    var temp: Double
-    var temp_kf: Double
-    var temp_max: Double
-    var temp_min: Double
+struct OneDayForcast: Codable{
+   // var city: [CityInfo]
+    var list: [Info]
 }
 
-struct oneDayForcast: Codable{
-    var dt: String
-    var dt_txt: String
-    var main: [Info]
+struct CityInfo: Codable{
+    var country: String
+    var name: String
+    var sunrise: Int
+    var sunset: Int
 }
+
+struct Info: Codable{
+    //var dt: Int
+    //var dt_txt: String
+    var main: WeatherInfo
+}
+
+struct WeatherInfo: Codable{
+//    var feels_like: String
+//    var grnd_level: Int
+//    var humidity: Int
+//    var pressure: Int
+//    var sea_level: Int
+ var temp: Double
+//    var temp_kf: Double
+//    var temp_max: Double
+//    var temp_min: Double
+}
+
+
 
 import UIKit
 
@@ -45,8 +59,13 @@ class ViewController: UIViewController {
                     if let jsonObj = try? JSONSerialization.jsonObject(with: d, options: .allowFragments) as? NSDictionary{
                         print(jsonObj)
                         
-                        if let list = try? JSONDecoder.decode(<#T##self: JSONDecoder##JSONDecoder#>)
-                            
+                            if let days = try? JSONDecoder().decode(OneDayForcast.self, from: d){
+                                print("Hello")
+//                                for i in days.list{
+//                                    print("\(i)\n")
+//                                }
+//                                
+                            }
                         }
                     }
                 }
