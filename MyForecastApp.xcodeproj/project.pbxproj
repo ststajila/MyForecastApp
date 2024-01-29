@@ -16,6 +16,7 @@
 		149D2E882B62B13B00621D50 /* MyForecastAppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 149D2E872B62B13B00621D50 /* MyForecastAppTests.swift */; };
 		149D2E922B62B13B00621D50 /* MyForecastAppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 149D2E912B62B13B00621D50 /* MyForecastAppUITests.swift */; };
 		149D2E942B62B13B00621D50 /* MyForecastAppUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 149D2E932B62B13B00621D50 /* MyForecastAppUITestsLaunchTests.swift */; };
+		8531D1DE2B67244D00946A75 /* WeatherCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8531D1DD2B67244D00946A75 /* WeatherCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +50,7 @@
 		149D2E8D2B62B13B00621D50 /* MyForecastAppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MyForecastAppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		149D2E912B62B13B00621D50 /* MyForecastAppUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyForecastAppUITests.swift; sourceTree = "<group>"; };
 		149D2E932B62B13B00621D50 /* MyForecastAppUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyForecastAppUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		8531D1DD2B67244D00946A75 /* WeatherCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,6 +103,7 @@
 			children = (
 				149D2E702B62B13900621D50 /* AppDelegate.swift */,
 				149D2E722B62B13900621D50 /* SceneDelegate.swift */,
+				8531D1DD2B67244D00946A75 /* WeatherCell.swift */,
 				149D2E742B62B13900621D50 /* ViewController.swift */,
 				149D2E762B62B13900621D50 /* Main.storyboard */,
 				149D2E792B62B13B00621D50 /* Assets.xcassets */,
@@ -258,6 +261,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8531D1DE2B67244D00946A75 /* WeatherCell.swift in Sources */,
 				149D2E752B62B13900621D50 /* ViewController.swift in Sources */,
 				149D2E712B62B13900621D50 /* AppDelegate.swift in Sources */,
 				149D2E732B62B13900621D50 /* SceneDelegate.swift in Sources */,

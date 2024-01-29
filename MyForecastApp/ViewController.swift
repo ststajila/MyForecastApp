@@ -18,8 +18,8 @@ struct CityInfo: Codable{
 }
 
 struct Info: Codable{
-    //var dt: Int
-    //var dt_txt: String
+    var dt: Double
+    var dt_txt: String
     var main: WeatherInfo
 }
 
@@ -35,16 +35,29 @@ struct WeatherInfo: Codable{
 //    var temp_min: Double
 }
 
-
-
 import UIKit
 
-class ViewController: UIViewController {
-
+class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+    
     @IBOutlet weak var locationLabel: UILabel!
+    @IBOutlet weak var tableView: UITableView!
+    var today: [Info] = [Info]()
+    var tommorow: [Info] = [Info]()
+    var tommorow1: [Info] = [Info]()
+    var tommorow2: [Info] = [Info]()
+    var tommorow3: [Info] = [Info]()
+    var fiveDayForecast: [[Info]] = [[Info]]()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         forecast()
+        tableView.delegate  = self
+        tableView.dataSource = self
+        fiveDayForecast.append(today)
+        fiveDayForecast.append(tommorow)
+        fiveDayForecast.append(tommorow1)
+        fiveDayForecast.append(tommorow2)
+        fiveDayForecast.append(tommorow3)
     }
     
     func forecast(){
@@ -60,11 +73,34 @@ class ViewController: UIViewController {
                         print(jsonObj)
                         
                             if let days = try? JSONDecoder().decode(OneDayForcast.self, from: d){
-                                print("Hello")
-//                                for i in days.list{
-//                                    print("\(i)\n")
-//                                }
-//                                
+                                
+                                var date =  "\(Calendar.current.component(.month, from: Date()))/\(Calendar.current.component(.day, from: Date()))/\(Calendar.current.component(.year, from: Date()))"
+                                
+                                var date1 =  "\(Calendar.current.component(.month, from: Date()))/\((Calendar.current.component(.day, from: Date()))+1)/\(Calendar.current.component(.year, from: Date()))"
+                                
+                                var date2 =  "\(Calendar.current.component(.month, from: Date()))/\((Calendar.current.component(.day, from: Date()))+2)/\(Calendar.current.component(.year, from: Date()))"
+                                
+                                var date3 =  "\(Calendar.current.component(.month, from: Date()))/\((Calendar.current.component(.day, from: Date()))+3)/\(Calendar.current.component(.year, from: Date()))"
+                                
+                                var date4 =  "\(Calendar.current.component(.month, from: Date()))/\((Calendar.current.component(.day, from: Date()))+4)/\(Calendar.current.component(.year, from: Date()))"
+                                
+                                for i in days.list{
+                                    if "\(Date(timeIntervalSince1970: i.dt).formatted(date: .numeric, time: .omitted))" == date {
+                                        self.today.append(i)
+                                    } else if "\(Date(timeIntervalSince1970: i.dt).formatted(date: .numeric, time: .omitted))" == date1{
+                                        self.tommorow.append(i)
+                                    }else if "\(Date(timeIntervalSince1970: i.dt).formatted(date: .numeric, time: .omitted))" == date2{
+                                        self.tommorow1.append(i)
+                                    }else if "\(Date(timeIntervalSince1970: i.dt).formatted(date: .numeric, time: .omitted))" == date3{
+                                        self.tommorow2.append(i)
+                                    }else if "\(Date(timeIntervalSince1970: i.dt).formatted(date: .numeric, time: .omitted))" == date4{
+                                        self.tommorow3.append(i)
+                                    }
+                                }
+                                
+                                DispatchQueue.main.async{
+                                    self.tableView.reloadData()
+                                }
                             }
                         }
                     }
@@ -72,6 +108,26 @@ class ViewController: UIViewController {
             }
         
         dataTask.resume()
+    }
+    
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return fiveDayForecast.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "myCell", for: indexPath) as! WeatherCell
+        
+//        DispatchQueue.main.async{
+//            print("\(self.fiveDayForecast.count)")
+//            
+//            for r in self.fiveDayForecast[indexPath.row]{
+//                print(r.dt_txt)
+//            }
+//        }
+        
+        
+        return cell
     }
 
 
