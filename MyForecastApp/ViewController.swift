@@ -53,11 +53,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         forecast()
         tableView.delegate  = self
         tableView.dataSource = self
-        fiveDayForecast.append(today)
-        fiveDayForecast.append(tommorow)
-        fiveDayForecast.append(tommorow1)
-        fiveDayForecast.append(tommorow2)
-        fiveDayForecast.append(tommorow3)
     }
     
     func forecast(){
@@ -74,6 +69,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                         
                             if let days = try? JSONDecoder().decode(OneDayForcast.self, from: d){
                                 
+                                print("List: \(days.list.count)")
+                                
                                 var date =  "\(Calendar.current.component(.month, from: Date()))/\(Calendar.current.component(.day, from: Date()))/\(Calendar.current.component(.year, from: Date()))"
                                 
                                 var date1 =  "\(Calendar.current.component(.month, from: Date()))/\((Calendar.current.component(.day, from: Date()))+1)/\(Calendar.current.component(.year, from: Date()))"
@@ -84,7 +81,22 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                                 
                                 var date4 =  "\(Calendar.current.component(.month, from: Date()))/\((Calendar.current.component(.day, from: Date()))+4)/\(Calendar.current.component(.year, from: Date()))"
                                 
+                                print("\(date2)")
+                                print("\(date3)")
+                            
+                                let dateComp = NSDateComponents()
+                                dateComp.year = Calendar.current.component(.year, from: Date())
+                                dateComp.month = Calendar.current.component(.month, from: Date())
+
+                                let calendar = NSCalendar.current
+                                let dn = calendar.date(from: dateComp as DateComponents)
+//                                
+                                let range = calendar.range(of: .day, in: .month, for: Date(timeIntervalSince1970: days.list[0].dt))
+                                
+                                print("\(range?.upperBound)")
+                                
                                 for i in days.list{
+                                    
                                     if "\(Date(timeIntervalSince1970: i.dt).formatted(date: .numeric, time: .omitted))" == date {
                                         self.today.append(i)
                                     } else if "\(Date(timeIntervalSince1970: i.dt).formatted(date: .numeric, time: .omitted))" == date1{
@@ -93,13 +105,20 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                                         self.tommorow1.append(i)
                                     }else if "\(Date(timeIntervalSince1970: i.dt).formatted(date: .numeric, time: .omitted))" == date3{
                                         self.tommorow2.append(i)
+                                        print("3rd")
                                     }else if "\(Date(timeIntervalSince1970: i.dt).formatted(date: .numeric, time: .omitted))" == date4{
                                         self.tommorow3.append(i)
                                     }
                                 }
                                 
                                 DispatchQueue.main.async{
+                                    self.fiveDayForecast.append(self.today)
+                                    self.fiveDayForecast.append(self.tommorow)
+                                    self.fiveDayForecast.append(self.tommorow1)
+                                    self.fiveDayForecast.append(self.tommorow2)
+                                    self.fiveDayForecast.append(self.tommorow3)
                                     self.tableView.reloadData()
+                                    print("tommorow2: \(self.tommorow2.count)")
                                 }
                             }
                         }
@@ -117,16 +136,54 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "myCell", for: indexPath) as! WeatherCell
+
+        let r1 = fiveDayForecast[indexPath.row]
+        print("\(r1.count)")
         
-//        DispatchQueue.main.async{
-//            print("\(self.fiveDayForecast.count)")
-//            
-//            for r in self.fiveDayForecast[indexPath.row]{
-//                print(r.dt_txt)
-//            }
+        if r1.count >= 1{
+            cell.d1.text = Date(timeIntervalSince1970: r1[0].dt).formatted(date: .long, time: .omitted)
+            cell.t1.text = "\(r1[0].main.temp)"
+        }
+        if r1.count >= 2{
+            cell.d2.text = Date(timeIntervalSince1970: r1[1].dt).formatted(date: .long, time: .omitted)
+            cell.t2.text = "\(r1[1].main.temp)"
+        }
+        if r1.count >= 3{
+            cell.d3.text = Date(timeIntervalSince1970: r1[2].dt).formatted(date: .long, time: .omitted)
+            cell.t3.text = "\(r1[2].main.temp)"
+        }
+        if r1.count >= 4{
+            cell.d4.text = Date(timeIntervalSince1970: r1[3].dt).formatted(date: .long, time: .omitted)
+            cell.t4.text = "\(r1[3].main.temp)"
+        }
+        if r1.count >= 5{
+            cell.d5.text = Date(timeIntervalSince1970: r1[4].dt).formatted(date: .long, time: .omitted)
+            cell.t5.text = "\(r1[4].main.temp)"
+        }
+        if r1.count >= 6{
+            cell.d6.text = Date(timeIntervalSince1970: r1[5].dt).formatted(date: .long, time: .omitted)
+            cell.t6.text = "\(r1[5].main.temp)"
+        }
+        if r1.count >= 7{
+            cell.d7.text = Date(timeIntervalSince1970: r1[6].dt).formatted(date: .long, time: .omitted)
+            cell.t7.text = "\(r1[6].main.temp)"
+        }
+        if r1.count >= 8{
+            cell.d8.text = Date(timeIntervalSince1970: r1[7].dt).formatted(date: .long, time: .omitted)
+            cell.t8.text = "\(r1[7].main.temp)"
+        }
+                //cell.t1.text = "\(today[indexPath.row].main.temp)"
+        
+//        switch length{
+//        case 1:
+//            cell.d1.text = today[indexPath.row].dt_txt
+//            cell.t1.text = "\(today[indexPath.row].main.temp)"
+//            print("set 1")
+//        case 2: cell.d1.text = today[indexPath.row].dt_txt
+//                cell.d2.text = today[indexPath.row+1].dt_txt
+//
+//        default: print ("Array is blank")
 //        }
-        
-        
         return cell
     }
 
