@@ -73,41 +73,46 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                                 
                                 var date =  "\(Calendar.current.component(.month, from: Date()))/\(Calendar.current.component(.day, from: Date()))/\(Calendar.current.component(.year, from: Date()))"
                                 
-                                var date1 =  "\(Calendar.current.component(.month, from: Date()))/\((Calendar.current.component(.day, from: Date()))+1)/\(Calendar.current.component(.year, from: Date()))"
+                                var date1 =  "\(Calendar.current.date(byAdding: .day, value: 1, to: Date())!.formatted(date: .numeric, time: .omitted))"
                                 
-                                var date2 =  "\(Calendar.current.component(.month, from: Date()))/\((Calendar.current.component(.day, from: Date()))+2)/\(Calendar.current.component(.year, from: Date()))"
-                                
-                                var date3 =  "\(Calendar.current.component(.month, from: Date()))/\((Calendar.current.component(.day, from: Date()))+3)/\(Calendar.current.component(.year, from: Date()))"
-                                
-                                var date4 =  "\(Calendar.current.component(.month, from: Date()))/\((Calendar.current.component(.day, from: Date()))+4)/\(Calendar.current.component(.year, from: Date()))"
-                                
-                                print("\(date2)")
-                                print("\(date3)")
-                            
-                                let dateComp = NSDateComponents()
-                                dateComp.year = Calendar.current.component(.year, from: Date())
-                                dateComp.month = Calendar.current.component(.month, from: Date())
+                                var date2 =  "\(Calendar.current.date(byAdding: .day, value: 2, to: Date())!.formatted(date: .numeric, time: .omitted))"
 
-                                let calendar = NSCalendar.current
-                                let dn = calendar.date(from: dateComp as DateComponents)
-//                                
-                                let range = calendar.range(of: .day, in: .month, for: Date(timeIntervalSince1970: days.list[0].dt))
                                 
-                                print("\(range?.upperBound)")
+                                var date3 =  "\(Calendar.current.date(byAdding: .day, value: 3, to: Date())!.formatted(date: .numeric, time: .omitted))"
+
+                                
+                                var date4 =  "\(Calendar.current.date(byAdding: .day, value: 4, to: Date())!.formatted(date: .numeric, time: .omitted))"
+
                                 
                                 for i in days.list{
                                     
-                                    if "\(Date(timeIntervalSince1970: i.dt).formatted(date: .numeric, time: .omitted))" == date {
-                                        self.today.append(i)
-                                    } else if "\(Date(timeIntervalSince1970: i.dt).formatted(date: .numeric, time: .omitted))" == date1{
-                                        self.tommorow.append(i)
-                                    }else if "\(Date(timeIntervalSince1970: i.dt).formatted(date: .numeric, time: .omitted))" == date2{
-                                        self.tommorow1.append(i)
-                                    }else if "\(Date(timeIntervalSince1970: i.dt).formatted(date: .numeric, time: .omitted))" == date3{
-                                        self.tommorow2.append(i)
-                                        print("3rd")
-                                    }else if "\(Date(timeIntervalSince1970: i.dt).formatted(date: .numeric, time: .omitted))" == date4{
-                                        self.tommorow3.append(i)
+                                    if Calendar.current.component(.month, from: Date()) == Calendar.current.component(.month, from: Date(timeIntervalSince1970: i.dt)){
+                                        
+                                        if "\(Date(timeIntervalSince1970: i.dt).formatted(date: .numeric, time: .omitted))" == date {
+                                            self.today.append(i)
+                                        } else if "\(Date(timeIntervalSince1970: i.dt).formatted(date: .numeric, time: .omitted))" == date1{
+                                            self.tommorow.append(i)
+                                        }else if "\(Date(timeIntervalSince1970: i.dt).formatted(date: .numeric, time: .omitted))" == date2{
+                                            self.tommorow1.append(i)
+                                        }else if "\(Date(timeIntervalSince1970: i.dt).formatted(date: .numeric, time: .omitted))" == date3{
+                                            self.tommorow2.append(i)
+                                            print("3rd")
+                                        }else if "\(Date(timeIntervalSince1970: i.dt).formatted(date: .numeric, time: .omitted))" == date4{
+                                            self.tommorow3.append(i)
+                                        }
+                                    } else{
+                                        if "\(Date(timeIntervalSince1970: i.dt).formatted(date: .numeric, time: .omitted))" == date {
+                                            self.today.append(i)
+                                        } else if "\(Date(timeIntervalSince1970: i.dt).formatted(date: .numeric, time: .omitted))" == date1{
+                                            self.tommorow.append(i)
+                                        }else if "\(Date(timeIntervalSince1970: i.dt).formatted(date: .numeric, time: .omitted))" == date2{
+                                            self.tommorow1.append(i)
+                                        }else if "\(Date(timeIntervalSince1970: i.dt).formatted(date: .numeric, time: .omitted))" == date3{
+                                            self.tommorow2.append(i)
+                                            print("3rd")
+                                        }else if "\(Date(timeIntervalSince1970: i.dt).formatted(date: .numeric, time: .omitted))" == date4{
+                                            self.tommorow3.append(i)
+                                        }
                                     }
                                 }
                                 
@@ -141,49 +146,38 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         print("\(r1.count)")
         
         if r1.count >= 1{
-            cell.d1.text = Date(timeIntervalSince1970: r1[0].dt).formatted(date: .long, time: .omitted)
-            cell.t1.text = "\(r1[0].main.temp)"
+            cell.date.text  = Date(timeIntervalSince1970: r1[0].dt).formatted(date: .long, time: .omitted)
+            cell.d1.text = Date(timeIntervalSince1970: r1[0].dt).formatted(date: .omitted, time: .shortened)
+            cell.t1.text = "\(r1[0].main.temp)°F"
         }
         if r1.count >= 2{
-            cell.d2.text = Date(timeIntervalSince1970: r1[1].dt).formatted(date: .long, time: .omitted)
-            cell.t2.text = "\(r1[1].main.temp)"
+            cell.d2.text = Date(timeIntervalSince1970: r1[1].dt).formatted(date: .omitted, time: .shortened)
+            cell.t2.text = "\(r1[1].main.temp)°F"
         }
         if r1.count >= 3{
-            cell.d3.text = Date(timeIntervalSince1970: r1[2].dt).formatted(date: .long, time: .omitted)
-            cell.t3.text = "\(r1[2].main.temp)"
+            cell.d3.text = Date(timeIntervalSince1970: r1[2].dt).formatted(date: .omitted, time: .shortened)
+            cell.t3.text = "\(r1[2].main.temp)°F"
         }
         if r1.count >= 4{
-            cell.d4.text = Date(timeIntervalSince1970: r1[3].dt).formatted(date: .long, time: .omitted)
-            cell.t4.text = "\(r1[3].main.temp)"
+            cell.d4.text = Date(timeIntervalSince1970: r1[3].dt).formatted(date: .omitted, time: .shortened)
+            cell.t4.text = "\(r1[3].main.temp)°F"
         }
         if r1.count >= 5{
-            cell.d5.text = Date(timeIntervalSince1970: r1[4].dt).formatted(date: .long, time: .omitted)
-            cell.t5.text = "\(r1[4].main.temp)"
+            cell.d5.text = Date(timeIntervalSince1970: r1[4].dt).formatted(date: .omitted, time: .shortened)
+            cell.t5.text = "\(r1[4].main.temp)°F"
         }
         if r1.count >= 6{
-            cell.d6.text = Date(timeIntervalSince1970: r1[5].dt).formatted(date: .long, time: .omitted)
-            cell.t6.text = "\(r1[5].main.temp)"
+            cell.d6.text = Date(timeIntervalSince1970: r1[5].dt).formatted(date: .omitted, time: .shortened)
+            cell.t6.text = "\(r1[5].main.temp)°F"
         }
         if r1.count >= 7{
-            cell.d7.text = Date(timeIntervalSince1970: r1[6].dt).formatted(date: .long, time: .omitted)
-            cell.t7.text = "\(r1[6].main.temp)"
+            cell.d7.text = Date(timeIntervalSince1970: r1[6].dt).formatted(date: .omitted, time: .shortened)
+            cell.t7.text = "\(r1[6].main.temp)°F"
         }
         if r1.count >= 8{
-            cell.d8.text = Date(timeIntervalSince1970: r1[7].dt).formatted(date: .long, time: .omitted)
-            cell.t8.text = "\(r1[7].main.temp)"
+            cell.d8.text = Date(timeIntervalSince1970: r1[7].dt).formatted(date: .omitted, time: .shortened)
+            cell.t8.text = "\(r1[7].main.temp)°F"
         }
-                //cell.t1.text = "\(today[indexPath.row].main.temp)"
-        
-//        switch length{
-//        case 1:
-//            cell.d1.text = today[indexPath.row].dt_txt
-//            cell.t1.text = "\(today[indexPath.row].main.temp)"
-//            print("set 1")
-//        case 2: cell.d1.text = today[indexPath.row].dt_txt
-//                cell.d2.text = today[indexPath.row+1].dt_txt
-//
-//        default: print ("Array is blank")
-//        }
         return cell
     }
 
